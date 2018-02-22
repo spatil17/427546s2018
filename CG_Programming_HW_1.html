@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+	<title style="font-size:30px">COMPUTER GRAPHICS - PROGRAMMING ASSIGNMENT I</title>
+	
+</head>
+
+<body style="font-family:verdana;">
+
+	<div style="font-family:times-roman;">
+
+	<h1 style="font-family:verdana;text-align:center"> COMPUTER GRAPHICS - PROGRAMMING ASSIGNMENT I </h1>
+<br></br>
+
+	<canvas id="myCanvas" width="1000" height="300" style= "padding: 0;
+    margin: auto;
+    display: block;
+    width: 800px;border:2px solid blue"></canvas>
+
+	</div>
+
+
+
+<script>
+
+var canvas;
+
+var context;
+
+var firstPoint = true;
+
+
+
+<!-- FUNCTIONS THAT GET CALLED WHEN CLICKED PARTICULAR INPUT BUTTON -->
+
+
+
+var selectPolyLine = function()
+
+{ 
+
+	canvas = document.getElementById('myCanvas');
+
+	context = canvas.getContext('2d');
+
+	canvas.addEventListener("mousedown", drawPolyLine, false);
+
+}
+
+var selectPolyGon = function()
+
+{ 
+
+	canvas = document.getElementById('myCanvas');
+
+	context = canvas.getContext('2d');
+
+	canvas.addEventListener("mousedown", drawPolyGon, false);
+
+	document.getElementById("demo").style ="inline";
+
+}
+
+var selectLine = function()
+
+{
+
+	canvas = document.getElementById('myCanvas');
+
+	context = canvas.getContext('2d');
+
+	canvas.addEventListener("mousedown", drawLine, false);
+
+}
+
+var selectCircle = function()
+
+{
+
+	canvas = document.getElementById('myCanvas');
+
+	context = canvas.getContext('2d');
+
+	canvas.addEventListener("mousedown", drawCircle, false);
+
+
+}
+
+var selectEllipse = function()
+
+{
+
+	canvas = document.getElementById('myCanvas');
+
+	context = canvas.getContext('2d');
+
+	canvas.addEventListener("mousedown", drawEllipse, false);
+
+
+}
+
+var selectRectangle = function()
+
+{
+
+	canvas = document.getElementById('myCanvas');
+
+	context = canvas.getContext('2d');
+
+	canvas.addEventListener("mousedown", drawRectangle, false);
+
+}
+
+function distance(a1, a2, a3, a4){
+
+   dx = a1 - a3;
+
+   dx *= dx;
+
+   dy = a4 - a2;
+
+   dy *= dy;
+
+   return Math.sqrt(dx + dy);
+
+}
+
+
+
+<!-- USING MIDPOINT ALGORITH TO DRAW LINE,ELLIPSE,POLYGON,CIRCLE,RECTANGLE. -->
+
+
+
+var drawLine = function(event){
+
+	if (firstPoint){
+
+		fx0 = event.x;
+
+		fy0 = event.y;
+
+		
+
+		fx0 -= canvas.offsetLeft; 		
+
+		                                   <!-- FOR LINE -->
+
+		fy0 -= canvas.offsetTop;
+
+		firstPoint = false;
+
+	}
+
+	else if (!firstPoint){
+
+		fx1 = event.x;
+
+		fy1 = event.y;
+
+		fx1 -= canvas.offsetLeft;
+
+		fy1 -= canvas.offsetTop;
+
+	}
+
+	if(fx1 != null && fy1 != null){
+
+		context.clearRect(0, 0, 1000, 300);
+
+		createLine(fx0, fy0, fx1, fy1);
+
+	}
+
+}
+
+var drawPolyLine = function(event){
+
+	if (firstPoint){
+
+		alx0 = event.x;
+
+		                                                 <!--FUNCTION FOR POLYLINE -->
+
+		aly0 = event.y;
+
+		alx0 -= canvas.offsetLeft;
+
+		aly0 -= canvas.offsetTop;
+
+		firstPoint = false;
+
+	}
+
+	else if (!firstPoint){
+
+		alx1 = event.x;
+
+		aly1 = event.y;
+
+		alx1 -= canvas.offsetLeft;
+
+		aly1 -= canvas.offsetTop;
+
+		firstPoint = true;
+
+	}
+
+	if(alx1 != null && aly1 != null){
+
+		createLine(alx0, aly0, alx1, aly1);
+
+	}
+
+}
+
+var drawPolyGon = function( event){
+
+	var rect = canvas.getBoundingClientRect();
+	var numberOfSides = document.getElementById("sides").value,
+	size = 50,
+	Xcenter = event.clientX - rect.left,
+	Ycenter = event.clientY - rect.top;
+	if (numberOfSides < 3) alert('The input should be atleast 3 lines');
+
+	context.beginPath();
+	context.moveTo (Xcenter +  size * Math.cos(0), Ycenter +  size *  Math.sin(0));          
+
+	for (var i = 1; i <= numberOfSides;i += 1) {
+	    context.lineTo (Xcenter + size * Math.cos(i * 2 * Math.PI / numberOfSides), Ycenter + size * Math.sin(i * 2 * Math.PI / numberOfSides));
+	}
+
+	context.strokeStyle =  document.querySelector('input[name = "color"]:checked').value;
+	context.lineWidth = 1;
+	context.stroke();
+	}
+
+var drawCircle = function(event){
+
+    if (firstPoint){
+
+    	cx0 = event.x;
+
+	    cy0 = event.y;
+
+	    cx0 -= canvas.offsetLeft;
+
+		                                       <!--FUNCTION CIRCLE -->
+
+	    cy0 -= canvas.offsetTop;
+
+	    firstPoint = false;
+
+	}
+
+	else if (!firstPoint){
+
+		context.clearRect(0, 0, 1000, 300);
+
+		cx1 = event.x;
+
+		cy1 = event.y;
+
+		cx1 -= canvas.offsetLeft;
+
+		cy1 -= canvas.offsetTop;
+
+			
+
+		createCircle(cx0, cy0, distance(cx0, cy0, cx1, cy1));
+
+	}
+
+}
+
+var drawEllipse = function(event){
+
+	if (firstPoint){
+
+	      evx0 = event.x;
+
+	    evy0 = event.y;
+
+	    evx0 -= canvas.offsetLeft;
+
+	    evy0 -= canvas.offsetTop;
+
+	      firstPoint = false;
+
+	}
+
+	  else if (!firstPoint){
+
+		  	context.clearRect(0, 0, 1000, 300);
+
+		  	evx1 = event.x;
+
+			evy1 = event.y;
+
+			evx1 -= canvas.offsetLeft;
+
+			evy1 -= canvas.offsetTop;
+
+			createEllipse(evx0, evy0, distance(evx0, evy0, evx1, evy0), distance(evx1, evy0, evx1, evy1));
+
+	  }
+
+}
+
+var drawRectangle = function(event){
+
+	  if (firstPoint){
+
+	  	    rex0 = event.x;
+
+	  	    rey0 = event.y;
+
+			                                                   <!--FUNCTION RECTANGLE -->
+
+	  	    rex0 -= canvas.offsetLeft;
+
+	  	    rey0 -= canvas.offsetTop;
+
+	  	    firstPoint = false;
+
+	  }
+
+	  else if (!firstPoint){
+
+		  	context.clearRect(0, 0, 1000, 300);
+
+		  	rex1 = event.x;
+
+			rey1 = event.y;
+
+			rex1 -= canvas.offsetLeft;
+
+			rey1 -= canvas.offsetTop;
+
+			createLine(rex0, rey0, rex1, rey0);
+
+			createLine(rex1, rey0, rex1, rey1);
+
+			createLine(rex1, rey1, rex0, rey1);
+
+			createLine(rex0, rey1, rex0, rey0);
+
+	  }
+
+}
+
+var clearScreen = function(){
+
+	location.reload(true);
+
+}
+
+                                                  <!-- FUNCTION TO CLEAR  -->
+
+
+
+</script>
+<br></br>
+<div id="demo" style="display:none;">
+	<p>Enter the number of sides<input type="number" id="sides" name="sides" value=""></p>
+</div>
+
+<p style="text-align:left-side"> Select the color </P>
+
+<br>
+
+<form style="font-size:18px">
+
+<input type="radio" id="color" name="color" value="black" checked>Black
+
+<input type="radio" id="color" name="color" value="blue">Blue
+
+<input type="radio" id="color" name="color" value="orange">Orange
+				
+<input type="radio" id="color" name="color" value="yellow">Yellow
+				
+<input type="radio" id="color" name="color" value="crimson">Crimson
+
+</form>
+
+</br>
+
+
+<br>
+
+	<form>
+
+	<input type="button" onclick="selectLine()" value="Line" style="width: 100pxpx; height: 30px; background-color:green">
+
+	<input type="button" onclick="selectCircle()" value="Circle" style="width: 100pxpx; height: 30px; background-color:green">
+
+	<input type="button" onclick="selectPolyLine()" value="PolyLine" style="width: 100pxpx; height: 30px; background-color:green">
+
+	<input type="button" onclick="selectPolyGon()" value="Polygon" style="width: 100pxpx; height: 30px; background-color:green">
+
+	<input type="button" onclick="selectRectangle()" value="Rectangle" style="width: 100pxpx; height: 30px; background-color:green">
+
+	<input type="button" onclick="selectEllipse()" value="Eclipse" style="width: 100px; height: 30px; background-color:green">
+
+	<input type="button" onclick="clearScreen()" value="Clear" style="width: 50px; height: 25px; background-color:red">
+
+	</form>
+
+	<br>
+	<h2 style="font-family:times-roman;text-align:center;color: blue"> Shwetambara Narayan Patil</h2>
+	
+
+
+	<script>
+
+	
+
+	<!-- WHEN CLICKED THE PARTICULAR BUTTON VARIABLE IS ASSIGNED AND FUNCTION GETS CALLED -->
+
+	
+
+	var createLine = function(x0, y0, x1, y1) {
+
+    var dx = Math.abs(x1 - x0);
+
+    var dy = Math.abs(y1 - y0);
+
+    var sx = (x0 < x1) ? 1 : -1;
+
+    var sy = (y0 < y1) ? 1 : -1;
+
+    var error = dx - dy;
+
+    while(!((x0 == x1) && (y0 == y1))){
+
+      	var s2 = error << 1;
+
+      	if (s2 > -dy) {
+
+        	error -= dy;
+
+        	x0 += sx;
+
+        }
+
+        if (s2 < dx) {
+
+        	error += dx;
+
+        	y0 += sy;
+
+        }
+
+        context.fillStyle = document.querySelector('input[name = "color"]:checked').value;
+
+        context.fillRect(x0, y0, 1, 1)
+
+    }
+
+}
+
+
+
+var createCircle = function(x0, y0, r){
+
+  	var x = r;
+
+  	var y = 0;
+
+  	var error = 1 - x;
+
+ 
+
+  	while(x >= y){
+
+  		<!-- context.fillStyle = document.querySelector('input[name = "color"]:checked').value; -->
+
+    	context.fillRect(x + x0, y + y0, 1, 1);
+
+    	context.fillRect(y + x0, x + y0, 1, 1);
+
+    	context.fillRect(-x + x0, y + y0, 1, 1);
+
+    	context.fillRect(-y + x0, x + y0, 1, 1);
+
+    	context.fillRect(-x + x0, -y + y0, 1, 1);
+
+    	context.fillRect(-y + x0, -x + y0, 1, 1);
+
+    	context.fillRect(x + x0, -y + y0, 1, 1);
+
+    	context.fillRect(y + x0, -x + y0, 1, 1);
+
+    	y++;
+
+    	if (error<0){
+
+      		error += 2 * y + 1;
+
+      	}
+
+      	else {
+
+      		x--;
+
+      		error += 2 * (y - x) + 1;
+
+      	}
+
+    }
+
+}
+
+var createEllipse = function(xz, yz, a, b){
+
+   	var x = -a;
+
+   	var y = 0;
+
+    var a2 = a * a;
+
+    var b2 = b * b;
+
+    var s2 = b;
+
+    dx = (1 + 2 * x) * s2 * s2;
+
+    dy = x * x;
+
+    error = dx + dy;
+
+ 
+
+    while (x <= 0){
+
+    	<!-- context.fillStyle = document.querySelector('input[name = "color"]:checked').value; -->
+
+    	context.fillRect(xz - x, yz + y, 1, 1);
+
+        context.fillRect(xz + x, yz + y, 1, 1);
+
+        context.fillRect(xz + x, yz - y, 1, 1);
+
+        context.fillRect(xz - x, yz - y, 1, 1);
+
+ 
+
+        s2 = 2 * error;
+
+        if (s2 >= dx){
+
+        	x++;
+
+        	error += dx += 2 * b2;
+
+        }
+
+        if (s2 <= dy){
+
+        	y++;
+
+        	error += dy += 2 * a2;
+
+        }
+
+    }
+
+        while (y++ < b) {
+
+    	<!-- context.fillStyle = document.querySelector('input[name = "color"]:checked').value; -->
+
+        context.fillRect(xz, yz + y, 1, 1);
+
+        context.fillRect(xz, yz - y, 1, 1);
+
+    }
+
+}
+
+
+
+	</script>
+
+</body>
+
+
+</html>
