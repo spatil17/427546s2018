@@ -1,3 +1,4 @@
-Please open CG_Programming_HW_1.html in a web browser.
+Computer Graphics Assignment - 3 
 
-Choose colors and shapes to draw.
+Shwetambara Narayan Patil
+index.html contains the logic required for the 2-D transformations viz. the front view , side view, top views. The CSS is in the style.css file.For rotate and shear, enter the values in degrees.

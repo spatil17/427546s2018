@@ -1,0 +1,143 @@
+html{
+	height:100%;
+	background:#0e0e49;
+	background:radial-gradient(#31314a,#0e0e49);
+	background-repeat:no-repeat;
+}
+body{
+	margin:0;
+	color:#000;
+	padding:0px;
+	font:300 15px/15px Georgia;
+}
+*,:after,:before{box-sizing:border-box}
+.pull-left{float:left}
+.pull-right{float:right}
+.clearfix:after,.clearfix:before{content:'';display:table}
+.clearfix:after{clear:both;display:block}
+
+.rangeslider,
+.rangeslider__fill {
+	display:block;
+	border-radius:20px;
+}
+
+.rangeslider {
+	position:absolute;
+}
+.rangeslider:after{
+	top:50%;
+	left:0;
+	right:0;
+	content:'';
+	width:80%;
+	height:5px;
+	margin-top:-2.5px;
+	border-radius:5px;
+	position:absolute;
+	background:#212131;
+}
+
+.rangeslider--horizontal{
+	width:80%;
+	height:28px;
+}
+
+.rangeslider--vertical{
+	width:5px;
+	min-height:150px;
+	max-height:80%;
+}
+.rangeslider--disabled{
+	filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=40);
+	opacity:0.4;
+}
+
+.rangeslider__fill{
+	position:absolute;
+	background:#ff637b;
+}
+.rangeslider--horizontal .rangeslider__fill{
+	top:0;
+	height:80%;
+}
+.rangeslider--vertical .rangeslider__fill{
+	bottom:0;
+	width:80%;
+}
+
+.rangeslider__handle{
+	top:60%;
+	width:20px;
+	height:20px;
+	cursor:pointer;
+	margin-top:-14px;
+	background:white;
+	position:absolute;
+	background:#ff637b;
+	border-radius:50%;
+	display:inline-block;
+}
+.rangeslider__handle:active{
+	background:#ff5a7b;
+}
+
+.rangeslider__fill,
+.rangeslider__handle{
+	z-index:1;
+}
+.rangeslider--horizontal .rangeslider__fill{
+	top:50%;
+	height:5px;
+	margin-top:-2.5px;
+}
+
+/* Budget */
+.budget-wrap{
+	padding:10px;
+	background:#0e0e49;
+	
+}
+.budget-wrap .header .title{
+	color:#fff;
+	font-size:18px;
+	margin-bottom:10px;
+}
+.budget-wrap .header .title .pull-right{
+	color:#ff5a84;
+	font-size:24px;
+	font-weight:400;
+}
+.budget-wrap .footer{
+	margin-top:10px;
+}
+.budget-wrap .footer .btn{
+	color:inherit;
+	padding:10px 10px;
+	border-radius:50px;
+	display:inline-block;
+	text-decoration:none;
+}
+.budget-wrap .footer .btn.btn-def{
+	color:#525263;
+}
+.budget-wrap .footer .btn.btn-pri{
+	color:#eee;
+	background:#ff5a84;
+}
+
+.label{
+	color:#7f8c8d;
+	font-size:14px;
+	margin-bottom:30px;
+}
+.huecolors {
+    background:#fcbdc6;
+    
+}
+
+@keyframes hue{
+    0%{filter: hue-rotate(0deg);}
+    100%{filter:hue-rotate(360deg);}
+    
+}
